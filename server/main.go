@@ -89,6 +89,17 @@ func handleEvent(g *game.Game, clients map[string]*Client, conn *server_conn.Con
 		apple.Position.X = float64(x)
 		apple.Position.Y = float64(y)
 		g.AddApple(apple)
+		broadCastNewApple(apple, clients, conn)
+	}
+}
+
+func broadCastNewApple(apple *entity.Apple, clients map[string]*Client, conn *server_conn.Connection) {
+	for _, client := range clients {
+		err := conn.SendNewApple(apple, client.addr)
+		if err != nil {
+			fmt.Println("cannot send update square", apple.ID, client.addr.String(), err)
+			continue
+		}
 	}
 }
 
