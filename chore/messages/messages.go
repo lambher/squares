@@ -79,5 +79,21 @@ func ParseSquareInfos(infos []string) (*entity.Square, error) {
 
 	square.Color = getColor(infos[6])
 
-	return &square, nil
+	return square, nil
+}
+
+func ParseAppleInfos(infos []string) (*entity.Apple, error) {
+	pX, err := strconv.ParseFloat(infos[2], 64)
+	if err != nil {
+		return nil, err
+	}
+	pY, err := strconv.ParseFloat(infos[3], 64)
+	if err != nil {
+		return nil, err
+	}
+	apple := entity.NewApple(infos[1])
+	apple.Position.X = pX
+	apple.Position.Y = pY
+
+	return apple, nil
 }

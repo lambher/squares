@@ -21,8 +21,8 @@ type Square struct {
 	Imd *imdraw.IMDraw
 }
 
-func NewSquare(id string) Square {
-	return Square{
+func NewSquare(id string) *Square {
+	return &Square{
 		ID:       id,
 		Position: &pixel.Vec{},
 		Velocity: &pixel.Vec{},

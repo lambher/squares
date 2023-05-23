@@ -10,6 +10,7 @@ import (
 	"image/color"
 	"math/rand"
 	"net"
+	"strconv"
 	"time"
 )
 
@@ -17,6 +18,8 @@ type Client struct {
 	addr   *net.UDPAddr
 	square *entity.Square
 }
+
+var appleID = 0
 
 func NewClient(addr *net.UDPAddr) *Client {
 	return &Client{
@@ -71,8 +74,21 @@ func main() {
 		previousTime = currentTime
 
 		g.Update(deltaTime.Seconds())
+		handleEvent(g, clients, conn)
 		broadCastGameState(g, clients, conn)
 		time.Sleep(time.Millisecond * 16) // 60 FPS
+	}
+}
+
+func handleEvent(g *game.Game, clients map[string]*Client, conn *server_conn.Connection) {
+	if rand.Intn(256) == 1 {
+		appleID += 1
+		apple := entity.NewApple(strconv.Itoa(appleID))
+		x := rand.Intn(config.ScreenWidth)
+		y := rand.Intn(config.ScreenHeight)
+		apple.Position.X = float64(x)
+		apple.Position.Y = float64(y)
+		g.AddApple(apple)
 	}
 }
 
@@ -102,7 +118,7 @@ func newSquare(client *Client) *entity.Square {
 	square.Color = randomColor()
 	square.Position.X = config.ScreenWidth / 2
 	square.Position.Y = config.ScreenHeight / 2
-	return &square
+	return square
 }
 
 func handleMessage(g *game.Game, conn *server_conn.Connection, client *Client, message string) error {

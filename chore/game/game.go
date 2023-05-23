@@ -7,6 +7,8 @@ import (
 type Game struct {
 	mapSquares map[string]*entity.Square
 	Squares    []*entity.Square
+
+	Apples map[string]*entity.Apple
 }
 
 func NewGame() *Game {
@@ -21,8 +23,16 @@ func (g *Game) AddSquare(square *entity.Square) {
 	g.mapSquares[square.ID] = square
 }
 
+func (g *Game) AddApple(apple *entity.Apple) {
+	g.Apples[apple.ID] = apple
+}
+
 func (g *Game) GetSquare(id string) *entity.Square {
 	return g.mapSquares[id]
+}
+
+func (g *Game) GetApple(id string) *entity.Apple {
+	return g.Apples[id]
 }
 
 func (g *Game) Update(deltaTime float64) {

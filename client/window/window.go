@@ -48,29 +48,14 @@ func Start(s *entity.Square, g *game.Game, c chan messages.Message) {
 			panic(err)
 		}
 
-		var previousTime time.Time = time.Now()
+		var previousTime = time.Now()
 
 		for !win.Closed() {
 			currentTime := time.Now()
 			deltaTime := currentTime.Sub(previousTime)
 			previousTime = currentTime
 
-			if win.Pressed(keyMap[Up]) {
-				s.MoveUp()
-				c <- messages.Up
-			}
-			if win.Pressed(keyMap[Down]) {
-				s.MoveDown()
-				c <- messages.Down
-			}
-			if win.Pressed(keyMap[Left]) {
-				s.MoveLeft()
-				c <- messages.Left
-			}
-			if win.Pressed(keyMap[Right]) {
-				s.MoveRight()
-				c <- messages.Right
-			}
+			listenEvent(s, win, c)
 
 			win.Clear(colornames.Black)
 
@@ -81,19 +66,4 @@ func Start(s *entity.Square, g *game.Game, c chan messages.Message) {
 			time.Sleep(time.Millisecond * 16) // 60 FPS
 		}
 	})
-}
-
-func drawGame(g *game.Game, win *pixelgl.Window) {
-	for _, square := range g.Squares {
-		drawSquare(square, win)
-	}
-}
-
-func drawSquare(s *entity.Square, win *pixelgl.Window) {
-	s.Imd.Clear()
-	s.Imd.Color = s.Color
-	s.Imd.Push(pixel.V(s.Position.X-s.Size/2, s.Position.Y-s.Size/2), pixel.V(s.Position.X+s.Size/2, s.Position.Y+s.Size/2))
-	s.Imd.Rectangle(0)
-	s.Imd.Draw(win)
-
 }

@@ -67,6 +67,18 @@ func handleMessage(square *entity.Square, g *game.Game, message string) error {
 		}
 		square.Set(s)
 	}
+	if infos[0] == "new_apple" {
+		a, err := messages.ParseAppleInfos(infos)
+		if err != nil {
+			return err
+		}
+		apple := g.GetApple(a.ID)
+		if apple == nil {
+			g.AddApple(a)
+			return nil
+		}
+		apple.Set(a)
+	}
 
 	return nil
 }
