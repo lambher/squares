@@ -15,6 +15,7 @@ func NewGame() *Game {
 	return &Game{
 		Squares:    make([]*entity.Square, 0),
 		mapSquares: make(map[string]*entity.Square),
+		Apples:     make(map[string]*entity.Apple),
 	}
 }
 
