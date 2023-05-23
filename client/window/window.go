@@ -3,6 +3,7 @@ package window
 import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
+	"github.com/lambher/multiplayer/chore/config"
 	"github.com/lambher/multiplayer/chore/entity"
 	"github.com/lambher/multiplayer/chore/game"
 	"github.com/lambher/multiplayer/chore/messages"
@@ -40,7 +41,7 @@ func Start(s *entity.Square, g *game.Game, c chan messages.Message) {
 	pixelgl.Run(func() {
 		cfg := pixelgl.WindowConfig{
 			Title:  "Red Square Game",
-			Bounds: pixel.R(0, 0, game.ScreenWidth, game.ScreenHeight),
+			Bounds: pixel.R(0, 0, config.ScreenWidth, config.ScreenHeight),
 		}
 		win, err := pixelgl.NewWindow(cfg)
 		if err != nil {

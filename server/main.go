@@ -99,8 +99,8 @@ func randomColor() color.RGBA {
 func newSquare(client *Client) *entity.Square {
 	square := entity.NewSquare(client.addr.String())
 	square.Color = randomColor()
-	square.Position.X = game.ScreenWidth / 2
-	square.Position.Y = game.ScreenHeight / 2
+	square.Position.X = config.ScreenWidth / 2
+	square.Position.Y = config.ScreenHeight / 2
 	return &square
 }
 

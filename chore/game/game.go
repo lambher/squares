@@ -4,11 +4,6 @@ import (
 	"github.com/lambher/multiplayer/chore/entity"
 )
 
-const (
-	ScreenWidth  = 640
-	ScreenHeight = 480
-)
-
 type Game struct {
 	mapSquares map[string]*entity.Square
 	Squares    []*entity.Square

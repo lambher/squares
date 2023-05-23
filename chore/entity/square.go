@@ -3,7 +3,7 @@ package entity
 import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
-	"github.com/lambher/multiplayer/chore/game"
+	"github.com/lambher/multiplayer/chore/config"
 	"golang.org/x/image/colornames"
 	"image/color"
 )
@@ -66,15 +66,15 @@ func (s *Square) updatePosition(deltaTime float64) {
 	s.Position.Y += s.Velocity.Y * deltaTime
 
 	if s.Position.X < 0 {
-		s.Position.X = game.ScreenWidth
+		s.Position.X = config.ScreenWidth
 	}
-	if s.Position.X > game.ScreenWidth {
+	if s.Position.X > config.ScreenWidth {
 		s.Position.X = 0
 	}
 	if s.Position.Y < 0 {
-		s.Position.Y = game.ScreenHeight
+		s.Position.Y = config.ScreenHeight
 	}
-	if s.Position.Y > game.ScreenHeight {
+	if s.Position.Y > config.ScreenHeight {
 		s.Position.Y = 0
 	}
 }
