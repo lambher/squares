@@ -3,8 +3,6 @@ package entity
 import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
-	"github.com/faiface/pixel/pixelgl"
-	"golang.org/x/image/colornames"
 )
 
 type Square struct {
@@ -16,7 +14,7 @@ type Square struct {
 	Friction float64
 	Size     float64
 
-	imd *imdraw.IMDraw
+	Imd *imdraw.IMDraw
 }
 
 func NewSquare(id string) Square {
@@ -28,7 +26,7 @@ func NewSquare(id string) Square {
 		Friction: 5,
 		Size:     20,
 
-		imd: imdraw.New(nil),
+		Imd: imdraw.New(nil),
 	}
 }
 
@@ -89,12 +87,4 @@ func (s *Square) updateFriction(deltaTime float64) {
 			s.Velocity.Y = 0
 		}
 	}
-}
-
-func (s *Square) Draw(win *pixelgl.Window) {
-	s.imd.Clear()
-	s.imd.Color = colornames.Darkgray
-	s.imd.Push(pixel.V(s.Position.X-s.Size/2, s.Position.Y-s.Size/2), pixel.V(s.Position.X+s.Size/2, s.Position.Y+s.Size/2))
-	s.imd.Rectangle(0)
-	s.imd.Draw(win)
 }

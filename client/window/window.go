@@ -73,11 +73,26 @@ func Start(s *entity.Square, g *game.Game, c chan messages.Message) {
 
 			win.Clear(colornames.Black)
 
-			g.Draw(win)
+			drawGame(g, win)
 			g.Update(deltaTime.Seconds())
 			win.Update()
 
 			time.Sleep(time.Millisecond * 16) // 60 FPS
 		}
 	})
+}
+
+func drawGame(g *game.Game, win *pixelgl.Window) {
+	for _, square := range g.Squares {
+		drawSquare(square, win)
+	}
+}
+
+func drawSquare(s *entity.Square, win *pixelgl.Window) {
+	s.Imd.Clear()
+	s.Imd.Color = colornames.Darkgray
+	s.Imd.Push(pixel.V(s.Position.X-s.Size/2, s.Position.Y-s.Size/2), pixel.V(s.Position.X+s.Size/2, s.Position.Y+s.Size/2))
+	s.Imd.Rectangle(0)
+	s.Imd.Draw(win)
+
 }

@@ -1,7 +1,6 @@
 package game
 
 import (
-	"github.com/faiface/pixel/pixelgl"
 	"github.com/lambher/multiplayer/chore/entity"
 )
 
@@ -34,11 +33,5 @@ func (g *Game) GetSquare(id string) *entity.Square {
 func (g *Game) Update(deltaTime float64) {
 	for _, square := range g.Squares {
 		square.Update(deltaTime)
-	}
-}
-
-func (g *Game) Draw(win *pixelgl.Window) {
-	for _, square := range g.Squares {
-		square.Draw(win)
 	}
 }
