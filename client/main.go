@@ -15,7 +15,7 @@ func main() {
 	//window.Start()
 	g := game.NewGame()
 
-	conn, err := client_conn.NewConnection("localhost:8080")
+	conn, err := client_conn.NewConnection("aerotoulousain.fr:8080")
 	if err != nil {
 		fmt.Println(err)
 		return

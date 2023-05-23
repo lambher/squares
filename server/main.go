@@ -87,6 +87,8 @@ func broadCastGameState(g *game.Game, clients map[string]*Client, conn *server_c
 func handleMessage(g *game.Game, conn *server_conn.Connection, client *Client, message string) error {
 	if messages.Message(message) == messages.AskForConnection {
 		square := entity.NewSquare(client.addr.String())
+		square.Position.X = game.ScreenWidth / 2
+		square.Position.Y = game.ScreenHeight / 2
 		client.SetSquare(&square)
 		g.AddSquare(&square)
 

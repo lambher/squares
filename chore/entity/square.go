@@ -14,7 +14,7 @@ type Square struct {
 	Friction float64
 	Size     float64
 
-	Imd *imdraw.IMDraw
+	imd *imdraw.IMDraw
 }
 
 func NewSquare(id string) Square {
@@ -26,7 +26,7 @@ func NewSquare(id string) Square {
 		Friction: 5,
 		Size:     20,
 
-		Imd: imdraw.New(nil),
+		imd: imdraw.New(nil),
 	}
 }
 
