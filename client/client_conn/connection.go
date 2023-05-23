@@ -70,7 +70,7 @@ func (c *Connection) AskForConnection() (*entity.Square, error) {
 		return nil, err
 	}
 	infos := strings.Split(data, " ")
-	if len(infos) != 6 {
+	if len(infos) != 7 {
 		return nil, errors.New(fmt.Sprintf("not enough infos: %s", data))
 	}
 	if infos[0] != "square" {

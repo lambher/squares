@@ -52,7 +52,7 @@ func main() {
 
 func handleMessage(square *entity.Square, g *game.Game, message string) error {
 	infos := strings.Split(message, " ")
-	if len(infos) != 6 {
+	if len(infos) != 7 {
 		return errors.New(fmt.Sprintf("not enough infos: %s", message))
 	}
 	if infos[0] == "square" {

@@ -3,6 +3,8 @@ package entity
 import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
+	"golang.org/x/image/colornames"
+	"image/color"
 )
 
 type Square struct {
@@ -13,8 +15,9 @@ type Square struct {
 	Speed    float64
 	Friction float64
 	Size     float64
+	Color    color.RGBA
 
-	imd *imdraw.IMDraw
+	Imd *imdraw.IMDraw
 }
 
 func NewSquare(id string) Square {
@@ -25,8 +28,9 @@ func NewSquare(id string) Square {
 		Speed:    100,
 		Friction: 5,
 		Size:     20,
+		Color:    colornames.Darkgray,
 
-		imd: imdraw.New(nil),
+		Imd: imdraw.New(nil),
 	}
 }
 

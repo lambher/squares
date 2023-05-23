@@ -90,7 +90,7 @@ func drawGame(g *game.Game, win *pixelgl.Window) {
 
 func drawSquare(s *entity.Square, win *pixelgl.Window) {
 	s.Imd.Clear()
-	s.Imd.Color = colornames.Darkgray
+	s.Imd.Color = s.Color
 	s.Imd.Push(pixel.V(s.Position.X-s.Size/2, s.Position.Y-s.Size/2), pixel.V(s.Position.X+s.Size/2, s.Position.Y+s.Size/2))
 	s.Imd.Rectangle(0)
 	s.Imd.Draw(win)

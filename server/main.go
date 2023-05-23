@@ -6,6 +6,8 @@ import (
 	"github.com/lambher/multiplayer/chore/game"
 	"github.com/lambher/multiplayer/chore/messages"
 	"github.com/lambher/multiplayer/server/server_conn"
+	"image/color"
+	"math/rand"
 	"net"
 	"time"
 )
@@ -26,6 +28,7 @@ func (c *Client) SetSquare(square *entity.Square) {
 }
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 	g := game.NewGame()
 	clients := make(map[string]*Client)
 
@@ -84,15 +87,30 @@ func broadCastGameState(g *game.Game, clients map[string]*Client, conn *server_c
 	}
 }
 
+func randomColor() color.RGBA {
+	return color.RGBA{
+		R: uint8(rand.Intn(256)),
+		G: uint8(rand.Intn(256)),
+		B: uint8(rand.Intn(256)),
+		A: 255,
+	}
+}
+
+func newSquare(client *Client) *entity.Square {
+	square := entity.NewSquare(client.addr.String())
+	square.Color = randomColor()
+	square.Position.X = game.ScreenWidth / 2
+	square.Position.Y = game.ScreenHeight / 2
+	return &square
+}
+
 func handleMessage(g *game.Game, conn *server_conn.Connection, client *Client, message string) error {
 	if messages.Message(message) == messages.AskForConnection {
-		square := entity.NewSquare(client.addr.String())
-		square.Position.X = game.ScreenWidth / 2
-		square.Position.Y = game.ScreenHeight / 2
-		client.SetSquare(&square)
-		g.AddSquare(&square)
+		square := newSquare(client)
+		client.SetSquare(square)
+		g.AddSquare(square)
 
-		err := conn.SendUpdateSquare(&square, client.addr)
+		err := conn.SendUpdateSquare(square, client.addr)
 		if err != nil {
 			return err
 		}

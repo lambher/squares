@@ -44,9 +44,15 @@ func (c *Connection) Send(message messages.Message, addr *net.UDPAddr) error {
 	return nil
 }
 
+func getColor(square *entity.Square) string {
+	c := square.Color
+	return fmt.Sprintf("%d,%d,%d,%d", c.R, c.G, c.B, c.A)
+}
+
 func (c *Connection) SendUpdateSquare(square *entity.Square, addr *net.UDPAddr) error {
 	pX, pY, vX, vY := square.Position.X, square.Position.Y, square.Velocity.X, square.Velocity.Y
-	_, err := c.conn.WriteToUDP([]byte(fmt.Sprintf("square %s %f %f %f %f", square.ID, pX, pY, vX, vY)), addr)
+
+	_, err := c.conn.WriteToUDP([]byte(fmt.Sprintf("square %s %f %f %f %f %s", square.ID, pX, pY, vX, vY, getColor(square))), addr)
 	if err != nil {
 		return fmt.Errorf("cannot send message: %w", err)
 	}
