@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/lambher/multiplayer/chore/config"
 	"github.com/lambher/multiplayer/chore/entity"
 	"github.com/lambher/multiplayer/chore/game"
 	"github.com/lambher/multiplayer/chore/messages"
