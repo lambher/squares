@@ -77,6 +77,7 @@ func main() {
 		g.Update(deltaTime.Seconds())
 		handleEvent(g, clients, conn)
 		broadCastGameState(g, clients, conn)
+		fmt.Println("update", deltaTime)
 		time.Sleep(time.Millisecond * 16) // 60 FPS
 	}
 }
