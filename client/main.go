@@ -83,16 +83,16 @@ func handleMessage(square *entity.Square, g *game.Game, message string) error {
 		}
 		apple.Set(a)
 	}
-	if infos[0] == "pop_apple" {
-		if len(infos) != 2 {
-			return errors.New(fmt.Sprintf("not enough infos: %s", message))
-		}
-		a, err := messages.ParsePopAppleInfos(infos)
-		if err != nil {
-			return err
-		}
-		g.RemoveApple(a)
-	}
+	//if infos[0] == "pop_apple" {
+	//	if len(infos) != 2 {
+	//		return errors.New(fmt.Sprintf("not enough infos: %s", message))
+	//	}
+	//	a, err := messages.ParsePopAppleInfos(infos)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	g.RemoveApple(a)
+	//}
 
 	return nil
 }

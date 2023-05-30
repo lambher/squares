@@ -1,6 +1,7 @@
 package window
 
 import (
+	"fmt"
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/lambher/multiplayer/chore/config"
@@ -62,6 +63,7 @@ func Start(s *entity.Square, g *game.Game, c chan messages.Message) {
 			drawGame(g, win)
 			g.Update(deltaTime.Seconds())
 			win.Update()
+			fmt.Println("update", deltaTime)
 
 			time.Sleep(time.Millisecond * 16) // 60 FPS
 		}
