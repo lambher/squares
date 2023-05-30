@@ -13,7 +13,7 @@ import (
 
 func main() {
 	//window.Start()
-	g := game.NewGame()
+	g := game.NewGame(make(chan game.Event))
 
 	conn, err := client_conn.NewConnection("aerotoulousain.fr:8080")
 	if err != nil {
@@ -52,10 +52,11 @@ func main() {
 
 func handleMessage(square *entity.Square, g *game.Game, message string) error {
 	infos := strings.Split(message, " ")
-	if len(infos) != 7 {
-		return errors.New(fmt.Sprintf("not enough infos: %s", message))
-	}
 	if infos[0] == "square" {
+		if len(infos) != 7 {
+			return errors.New(fmt.Sprintf("not enough infos: %s", message))
+		}
+
 		s, err := messages.ParseSquareInfos(infos)
 		if err != nil {
 			return err
@@ -68,7 +69,10 @@ func handleMessage(square *entity.Square, g *game.Game, message string) error {
 		square.Set(s)
 	}
 	if infos[0] == "new_apple" {
-		a, err := messages.ParseAppleInfos(infos)
+		if len(infos) != 4 {
+			return errors.New(fmt.Sprintf("not enough infos: %s", message))
+		}
+		a, err := messages.ParseNewAppleInfos(infos)
 		if err != nil {
 			return err
 		}
@@ -78,6 +82,16 @@ func handleMessage(square *entity.Square, g *game.Game, message string) error {
 			return nil
 		}
 		apple.Set(a)
+	}
+	if infos[0] == "pop_apple" {
+		if len(infos) != 2 {
+			return errors.New(fmt.Sprintf("not enough infos: %s", message))
+		}
+		a, err := messages.ParsePopAppleInfos(infos)
+		if err != nil {
+			return err
+		}
+		g.RemoveApple(a)
 	}
 
 	return nil

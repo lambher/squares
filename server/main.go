@@ -32,8 +32,9 @@ func (c *Client) SetSquare(square *entity.Square) {
 }
 
 func main() {
+	eventChannel := make(chan game.Event)
 	rand.Seed(time.Now().UnixNano())
-	g := game.NewGame()
+	g := game.NewGame(eventChannel)
 	clients := make(map[string]*Client)
 
 	// créer une adresse pour écouter sur un port spécifique
@@ -65,7 +66,7 @@ func main() {
 			}
 		}
 	}()
-
+	listenMessageChannel(conn, eventChannel)
 	var previousTime = time.Now()
 
 	for {
@@ -158,4 +159,15 @@ func handleMessage(g *game.Game, conn *server_conn.Connection, client *Client, m
 	}
 
 	return nil
+}
+
+func listenMessageChannel(conn *server_conn.Connection, c chan game.Event) {
+	go func() {
+		for event := range c {
+			if event.Type == game.AppleCollision {
+				fmt.Println("apple collision", event.Apple.Position)
+			}
+		}
+	}()
+
 }

@@ -62,7 +62,15 @@ func (c *Connection) SendUpdateSquare(square *entity.Square, addr *net.UDPAddr) 
 func (c *Connection) SendNewApple(apple *entity.Apple, addr *net.UDPAddr) error {
 	pX, pY := apple.Position.X, apple.Position.Y
 
-	_, err := c.conn.WriteToUDP([]byte(fmt.Sprintf("new_apple %s %f %f %s", apple.ID, pX, pY)), addr)
+	_, err := c.conn.WriteToUDP([]byte(fmt.Sprintf("new_apple %s %f %f", apple.ID, pX, pY)), addr)
+	if err != nil {
+		return fmt.Errorf("cannot send message: %w", err)
+	}
+	return nil
+}
+
+func (c *Connection) SendPopApple(apple *entity.Apple, addr *net.UDPAddr) error {
+	_, err := c.conn.WriteToUDP([]byte(fmt.Sprintf("pop_apple %s", apple.ID)), addr)
 	if err != nil {
 		return fmt.Errorf("cannot send message: %w", err)
 	}

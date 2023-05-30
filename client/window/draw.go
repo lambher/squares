@@ -29,8 +29,8 @@ func drawSquare(s *entity.Square, win *pixelgl.Window) {
 func drawApple(a *entity.Apple, win *pixelgl.Window) {
 	a.Imd.Clear()
 	a.Imd.Color = color.RGBA{0, 255, 0, 255}
-	a.Imd.Push(pixel.V(a.Position.X-a.Size/2, a.Position.Y-a.Size/2), pixel.V(a.Position.X+a.Size/2, a.Position.Y+a.Size/2))
-	a.Imd.Rectangle(0)
+	a.Imd.Push(*a.Position)
+	a.Imd.Circle(a.Radius, 0)
 	a.Imd.Draw(win)
 
 }
