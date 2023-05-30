@@ -66,7 +66,7 @@ func main() {
 			}
 		}
 	}()
-	listenMessageChannel(conn, eventChannel)
+	listenMessageChannel(g, clients, conn, eventChannel)
 	var previousTime = time.Now()
 
 	for {
@@ -98,7 +98,17 @@ func broadCastNewApple(apple *entity.Apple, clients map[string]*Client, conn *se
 	for _, client := range clients {
 		err := conn.SendNewApple(apple, client.addr)
 		if err != nil {
-			fmt.Println("cannot send update square", apple.ID, client.addr.String(), err)
+			fmt.Println("cannot send new apple", apple.ID, client.addr.String(), err)
+			continue
+		}
+	}
+}
+
+func broadCastPopApple(apple *entity.Apple, clients map[string]*Client, conn *server_conn.Connection) {
+	for _, client := range clients {
+		err := conn.SendPopApple(apple, client.addr)
+		if err != nil {
+			fmt.Println("cannot send pop apple", apple.ID, client.addr.String(), err)
 			continue
 		}
 	}
@@ -161,11 +171,12 @@ func handleMessage(g *game.Game, conn *server_conn.Connection, client *Client, m
 	return nil
 }
 
-func listenMessageChannel(conn *server_conn.Connection, c chan game.Event) {
+func listenMessageChannel(g *game.Game, clients map[string]*Client, conn *server_conn.Connection, c chan game.Event) {
 	go func() {
 		for event := range c {
 			if event.Type == game.AppleCollision {
-				fmt.Println("apple collision", event.Apple.Position)
+				g.RemoveApple(event.Apple)
+				broadCastPopApple(event.Apple, clients, conn)
 			}
 		}
 	}()

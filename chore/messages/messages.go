@@ -84,7 +84,16 @@ func ParseSquareInfos(infos []string) (*entity.Square, error) {
 
 func ParseNewAppleInfos(infos []string) (*entity.Apple, error) {
 	apple := entity.NewApple(infos[1])
-
+	pX, err := strconv.ParseFloat(infos[2], 64)
+	if err != nil {
+		return nil, err
+	}
+	pY, err := strconv.ParseFloat(infos[3], 64)
+	if err != nil {
+		return nil, err
+	}
+	apple.Position.X = pX
+	apple.Position.Y = pY
 	return apple, nil
 }
 
